@@ -38,12 +38,12 @@ This project was initiated as part of my personal learning and professional port
 
 ## 🧩 Module Progress
 
-| Module                        | Status     |
-|------------------------------|------------|
-| 1. Project Setup             | ✅ Complete |
+| Module                       | Status         |
+|------------------------------|----------------|
+| 1. Project Setup             | ✅ Complete    |
 | 2. CSV Upload + Summary      | 🔜 In Progress |
-| 3. LLM-Powered Debugging     | ⏳ Planned |
-| 4. Insights via Chat         | ⏳ Planned |
+| 3. LLM-Powered Debugging     | ⏳ Planned     |
+| 4. Insights via Chat         | ⏳ Planned     |
 
 ---
 
