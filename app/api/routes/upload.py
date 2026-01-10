@@ -25,7 +25,7 @@ async def upload_file(file: UploadFile = File(...)):
         
     
     else:
-        raise HTTPExecution(
+        raise HTTPException(
             status_code=400,
             detail = "Only CSV, XLSX and JSON files are supported"
         )
