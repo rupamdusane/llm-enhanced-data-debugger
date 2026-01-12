@@ -1,7 +1,12 @@
 from fastapi import APIRouter
+from app.services.anomaly_detector import detect_anolamiles
 
-router = APIRouter()
+router = APIRouter(prefix="/anomalies", tags=["Anomalies"])
 
-@router.get("/anomalies")
-def anomalies_placeholder():
-    return {"status": "anomalies module placeholder"}
+@router.post("/")
+def analyze_anomalies(inspeciton_result: dict):
+    anomalies = detect_anolamiles(inspeciton_result)
+    
+    return {
+        "anomalies": anomalies
+    }

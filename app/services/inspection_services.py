@@ -48,7 +48,7 @@ def inspect_csv_file(file_path: str, chunksize: int = 100_000) -> dict:
         }
         
     return {
-        "rows": total_rows,
+        "rows_count": total_rows,
         "columns": len(final_schema),
         "schema": final_schema,
         "warnings": warnings
