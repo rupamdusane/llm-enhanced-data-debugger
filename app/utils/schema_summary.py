@@ -12,7 +12,7 @@ def summarize_dataframe_chunk(df: pd.DataFrame) -> dict:
         summary[col] = {
             "dtype": str(series.dtype),
             "null_count": int(series.isna().sum()),
-            "unique_count": int(series.nunique(dropna=True)),
-            "sample_values": series.dropna().head(3).tolist()
+            "unique_values": set(series.astype(str).unique()[:100]),
+            "sample_values": series.astype(str).head(3).tolist()
         }
     return summary

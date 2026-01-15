@@ -1,14 +1,14 @@
 from pydnatic import BaseModel
-from typing import List, Dict, Any
+from typing import List, Dict
 
 class ColumnSummary(BaseModel):
-    name: str
-    data_type: str
-    non_null_count: int
+    dtype: str
+    null_count: int
     unique_count: int
+    sample_values: List
 
 class InspectResult(BaseModel):
-    rows: int
+    rows_count: int
     columns: int
     schema : Dict[str, ColumnSummary]
-    Warnings: List[str]
+    warnings: List[str]
