@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.core.datastore import datastore
-from app.services.anomaly_detector import detect_anolamiles
+from app.services.anomaly_detector import detect_anomalies
 
 router = APIRouter(prefix="/anomalies", tags=["Anomalies"])
 
@@ -8,7 +8,7 @@ router = APIRouter(prefix="/anomalies", tags=["Anomalies"])
 def analyze_anomalies():
     try:
         df = datastore.get_dataframe()
-        anomalies = detect_anolamiles(df)
+        anomalies = detect_anomalies(df)
         
         return {"anomalies": anomalies}
     

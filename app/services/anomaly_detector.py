@@ -1,18 +1,20 @@
 from typing import Dict, List, Any
+from app.core.pipeline_state import set_state
 
-def detect_anolamiles(inspection_result: Dict[str, Any]) -> List[Dict[str, Any]]:
+def detect_anomalies(inspection_result: Dict[str, Any]) -> List[Dict[str, Any]]:
     """
     Analyze inspection output and return anomaly signals.
     """
     anomalies = []
     
-    row_count = inspection_result.get("row_count",0)
+    row_count = inspection_result.get("rows_count",0)
     columns = inspection_result.get("columns",{})
     
     for col_name, stats in columns.items():
         anomalies.extend(
             analyze_column(col_name, stats, row_count)
-        )    
+        )
+    set_state("anomalies", anomalies)
     return anomalies
 
 def analyze_column(
