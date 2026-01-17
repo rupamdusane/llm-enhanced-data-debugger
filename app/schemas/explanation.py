@@ -8,4 +8,4 @@ class ExplanationItem(BaseModel):
     
 class ExplanationResponse(BaseModel):
     summary: str
-    explantions: List[ExplanationItem]
+    explanations: List[ExplanationItem]

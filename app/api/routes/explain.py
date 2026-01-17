@@ -1,11 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.services.explanation_service import explain_anomalies
+from app.schemas.explanation import ExplanationResponse
 
 router = APIRouter(prefix="/explain", tags=["LLM Explainer"])
 
-@router.post("/")
+@router.post("/", response_model=ExplanationResponse)
 def explain():
-    try:
-        return explain_anomalies()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return explain_anomalies()

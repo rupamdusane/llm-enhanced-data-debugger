@@ -8,7 +8,7 @@ def detect_anomalies(inspection_result: Dict[str, Any]) -> List[Dict[str, Any]]:
     anomalies = []
     
     row_count = inspection_result.get("rows_count",0)
-    columns = inspection_result.get("columns",{})
+    columns = inspection_result.get("schema",{})
     
     for col_name, stats in columns.items():
         anomalies.extend(

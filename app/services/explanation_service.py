@@ -1,29 +1,39 @@
-from app.core.pipeline_state import get_state
+from app.core.pipeline_state import pipeline_state
 from app.schemas.explanation import ExplanationResponse, ExplanationItem
 from app.services.llm.prompt_builder import build_explanaiton_prompt
 
 def explain_anomalies() -> ExplanationResponse:
-    anomalies = get_state("anomalies")
+    anomalies = pipeline_state.get("anomalies", [])
     
     if not anomalies:
         return ExplanationResponse(
-            summary="No anomalies detected.",
+            summary="No anomalies detected. Dataset appears clean.",
             explanations=[]
         )
 
-    # Mock explanations (No real LLM integration yet)
-    explanations = []
+    explanations: list[ExplanationItem] = []
     
-    for a in anomalies:
+    for anomaly in anomalies:
         explanations.append(
             ExplanationItem(
-                anomaly_type=a.get("type", "unknown"),
-                column=a.get("column", "unknown"),
-                explanation=f"The column '{a.get('column')}' has an issue of type '{a.get('type')}'."
+                column=anomaly["column"],
+                anomaly_type=anomaly["type"],
+                severity=anomaly["severity"],
+                explanation=generate_mock_explanation(anomaly)
             )
         )
         
     return ExplanationResponse(
-        summary=f"{len(explanations)} data quality issues detected.",
+        summary=f"{len(explanations)} potential data quality issues detected.",
         explanations=explanations
+    )
+    
+def generate_mock_explanation(anomaly: dict) -> str:
+    """
+    Placeholder for real LLM logic.
+    """
+    return (
+        f"The column '{anomaly['column']}' shows a "
+        f"{anomaly['type']} issue. "
+        f"This may impact data quality and downstream analysis."
     )
