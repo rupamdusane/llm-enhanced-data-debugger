@@ -1,11 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.services.explanation_service import explain_anomalies
+from app.core.pipeline_guard import require_state
 
 router = APIRouter(prefix="/explain", tags=["LLM Explainer"])
 
 @router.post("/")
 def explain():
-    try:
-        return explain_anomalies()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    require_state("anomalies")
+    return explain_anomalies()
