@@ -40,5 +40,4 @@ def build_explanation_prompt(
         "Do not invent new anomalies."
     )
     
-    
     return "\n".join(lines)
