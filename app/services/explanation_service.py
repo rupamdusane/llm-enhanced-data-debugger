@@ -1,11 +1,17 @@
-from app.core.pipeline_state import pipeline_state
+from typing import List
+
+from app.core.pipeline_state import get_state
 from app.schemas.explanation import ExplanationResponse, ExplanationItem
 from app.services.prompt_builder import build_explanation_prompt
 from app.services.deterministic_explainer import DETERMINISTIC_EXPLANATIONS
+from app.services.mock_llm_client import MockLLMClient
+
+# Initialize mock LLM client
+llm_client = MockLLMClient()
 
 def explain_anomalies() -> ExplanationResponse:
-    anomalies = pipeline_state.get("anomalies", [])
-    inspection = pipeline_state.get("inspection", {})
+    anomalies = get_state("anomalies", [])
+    inspection = get_state("inspection", {})
     
     if not anomalies:
         return ExplanationResponse(
@@ -16,10 +22,16 @@ def explain_anomalies() -> ExplanationResponse:
     explanations: list[ExplanationItem] = []
     
     for anomaly in anomalies:
-        explanation_text = (
-            DETERMINISTIC_EXPLANATIONS.get(anomaly["type"])
-            or generate_mock_explanation(anomaly)
-        )
+        # Deterministic explanation first
+        explanation_text = DETERMINISTIC_EXPLANATIONS.get(anomaly["type"])
+        
+        # LLM fallback if no deterministic explanation found
+        if explanation_text is None:
+            try:
+                prompt = build_explanation_prompt(inspection, [anomaly])
+                explanation_text = llm_client.generate(prompt)
+            except Exception:
+                explanation_text = generate_mock_explanation(anomaly)
         
         explanations.append(
             ExplanationItem(
@@ -30,9 +42,6 @@ def explain_anomalies() -> ExplanationResponse:
             )
         )
         
-    # LLM prompt is built but not executed yet
-    _ = build_explanation_prompt(inspection, anomalies)
-        
     return ExplanationResponse(
         summary=f"{len(explanations)} potential data quality issues detected.",
         explanations=explanations
@@ -40,7 +49,7 @@ def explain_anomalies() -> ExplanationResponse:
     
 def generate_mock_explanation(anomaly: dict) -> str:
     """
-    Mock LLM fallback explanation.
+    Final safety fallback explanation.
     """
     return (
         f"The column '{anomaly['column']}' shows a "

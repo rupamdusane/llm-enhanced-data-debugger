@@ -8,7 +8,7 @@ class MockLLMClient(LLMClient):
     def generate(self, prompt: str) -> str:
         return (
             "LLM analysis (mocked):\n"
-            "The detected anomalies indicate potential data quality issues. "
-            "Review missing values, inconsistent data types, and high cardinality columns."
-            "before downstream analysis."
+            "Based on the dataset inspection, this anomaly indicates a potential "
+            "data quality issue that may affect downstream analytics. "
+            "Recommended action: review source data and apply validation rules."
         )
