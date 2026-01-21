@@ -8,7 +8,7 @@ A backend-first intelligent tool to upload CSV files and receive real-time insig
 
 - **Backend:** FastAPI
 - **Language:** Python
-- **AI Integration:** OpenAI API (planned)
+- **AI Integration:** LLM API (Ollama-Mistral & Gemini API)
 - **Planned Frontend:** React (optional in later modules)
 - **Hosting:** Local / Cloud-native (TBD)
 
@@ -41,22 +41,9 @@ This project was initiated as part of my personal learning and professional port
 | Module                       | Status         |
 |------------------------------|----------------|
 | 1. Project Setup             | ✅ Complete    |
-| 2. CSV Upload + Summary      | 🔜 In Progress |
-| 3. LLM-Powered Debugging     | ⏳ Planned     |
+| 2. CSV Upload + Summary      | ✅ Complete    |
+| 3. LLM-Powered Debugging     | 🔜 In Progress |
 | 4. Insights via Chat         | ⏳ Planned     |
-
----
-
-## 📁 Folder Structure
-
-llm-enhanced-data-debugger/
-├── app/
-│ ├── main.py # FastAPI app entry
-│ └── routes/ # Modular route files (ping, upload, etc.)
-├── tests/ # For later unit tests
-├── README.md
-├── .gitignore
-└── requirements.txt
 
 ---
 
@@ -70,6 +57,7 @@ Aspiring AI x Data Infrastructure Engineer
 
 ## 🔒 Notes
 
-This project is in private development and not open source yet due to startup aspirations.  
+This project is in private development and not open source yet..  
 Please contact me directly for access, collaboration, or internship evaluation.
+
 
